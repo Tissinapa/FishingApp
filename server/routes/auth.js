@@ -3,13 +3,25 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken"); 
 const pool = require("../data/dataDB.js");
-
+const {body, validationResult} = require("express-validator");
 
 const router = express.Router();
 const SECRET = process.env.JWT_SECRET;
 dotenv.config();
 
-router.post("/signup", async (req, res)=>{
+router.post("/signup",
+    [
+        body("username").isLength({min: 3 ,max: 30}).trim().escape().withMessage("Username must be 3 - 30 char long"),
+        body("email").isEmail().withMessage("Invalid email address"),
+        body("password").isStrongPassword().withMessage("Password is not strong enough, use at least one number, capital letter and special character")
+
+    ],
+    
+    async (req, res)=>{
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+          return res.send(errors.errors[0].msg);
+        }
     try{
         const {username,email, password} = req.body;
 
