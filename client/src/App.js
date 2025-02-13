@@ -1,6 +1,6 @@
-import logo from './logo.svg';
+import logo from '../src/logo.svg';
 import {useEffect, useState} from 'react';
-import './App.css';
+import '../src/App.css';
 
 function App() {
 	const [message, setMessage] = useState("");
@@ -13,6 +13,7 @@ function App() {
 	return (
 		<div>
 			<h1> Fishing app</h1>
+			<img src={logo} class="App-logo" alt="logo"></img>
 			<p>{message}</p>
 		</div>
 	)
