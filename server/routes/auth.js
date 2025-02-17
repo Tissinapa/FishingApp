@@ -23,7 +23,7 @@ router.post("/signup",
           return res.send(errors.errors[0].msg);
         }
     try{
-        const {username,email, password} = req.body;
+        const {username,email, password} = req.body; 
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -63,7 +63,10 @@ router.post("/login", async (req,res)=>{
         res.status(500).json({error: error.message});
     }
 })
-router.get("/testi", async (req,res)=>{
+/* const validateToken = function(req, res) {
+    const authHeader = req.headers["authorization"]
+} */
+router.get("/validate",  async (req,res)=>{
     res.send("toimii");
 })
 
