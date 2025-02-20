@@ -57,7 +57,7 @@ router.post("/login", async (req,res)=>{
             sameSite: "Strict",
             maxAge: 60 *60 * 1000,
         });
-        res.send("Logged in")
+        res.json({message:"Logged in", token})
         
     }catch (error){
         res.status(500).json({error: error.message});

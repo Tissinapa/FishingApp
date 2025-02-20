@@ -7,17 +7,42 @@ import { useTheme } from '@mui/material/styles';
 const providers = [{ id: 'credentials', name: 'Email and Password' }];
 
 export function Login() {
-	const theme = useTheme();
+  const theme = useTheme(); 
+  const handleSignIn = async (provider, formData) => { 
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const acceptTerms = formData.get('tandc') === 'true';
 
-	
-	return (
+    if (!acceptTerms) {
+      alert("You must agree to the T&C to continue.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      localStorage.setItem("token", data.token);
+      window.location.href = "/dashboard"; 
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
     <AppProvider theme={theme}>
       <SignInPage
-        signIn={(provider, formData) =>
-          alert(
-            `Signing in with "${provider.name}" and credentials: ${formData.get('email')}, ${formData.get('password')} and checkbox value: ${formData.get('tandc')}`,
-          )
-        }
+        signIn={handleSignIn} 
         slotProps={{
           emailField: { variant: 'standard', autoFocus: false },
           passwordField: { variant: 'standard' },
@@ -40,5 +65,3 @@ export function Login() {
     </AppProvider>
   );
 }
-  
-
