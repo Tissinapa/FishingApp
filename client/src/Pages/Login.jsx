@@ -41,27 +41,40 @@ export function Login() {
 
   return (
     <AppProvider theme={theme}>
-      <SignInPage
-        signIn={handleSignIn} 
-        slotProps={{
-          emailField: { variant: 'standard', autoFocus: false },
-          passwordField: { variant: 'standard' },
-          submitButton: { variant: 'outlined' },
-          rememberMe: {
-            control: (
-              <Checkbox
-                name="tandc"
-                value="true"
-                color="primary"
-                sx={{ padding: 0.5, '& .MuiSvgIcon-root': { fontSize: 20 } }}
-              />
-            ),
-            color: 'textSecondary',
-            label: 'I agree with the T&C',
-          },
-        }}
-        providers={providers}
-      />
-    </AppProvider>
+    <div 
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh", 
+        width: "100vw",  
+        backgroundColor: theme.palette.background.default,
+      }}
+    >
+      <div style={{ width: "100%", maxWidth: 400 }}> {/* Limits form width */}
+        <SignInPage
+          signIn={handleSignIn} 
+          slotProps={{
+            emailField: { variant: 'standard', autoFocus: false },
+            passwordField: { variant: 'standard' },
+            submitButton: { variant: 'outlined' },
+            rememberMe: {
+              control: (
+                <Checkbox
+                  name="tandc"
+                  value="true"
+                  color="primary"
+                  sx={{ padding: 0.5, '& .MuiSvgIcon-root': { fontSize: 20 } }}
+                />
+              ),
+              color: 'textSecondary',
+              label: 'I agree with the T&C',
+            },
+          }}
+          providers={providers}
+        />
+      </div>
+    </div>
+  </AppProvider>
   );
 }

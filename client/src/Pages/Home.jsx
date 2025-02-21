@@ -1,11 +1,13 @@
-
+import Hbimg from "../Components/Hbimg"
 
 export function Home() {
     console.log("kotona")
   return (
-    <div>
-        <h1>Kalaan</h1>
-    </div>
+    <Hbimg>
+        <div>
+          <h1>Kalaan</h1>
+        </div>
+    </Hbimg>
 
   )
 }
