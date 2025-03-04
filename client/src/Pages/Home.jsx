@@ -13,7 +13,7 @@ export function Home() {
           variant="containded"
           color="primary"
           size="large"
-          onClick={() => handleClick("/dashboard")}
+          onClick={() => handleClick("/login")}
           >
             Kalaan
           </Button>
