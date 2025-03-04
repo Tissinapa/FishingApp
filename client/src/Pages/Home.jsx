@@ -1,11 +1,22 @@
 import Hbimg from "../Components/Hbimg"
+import { useNavigate } from "react-router-dom";
+import  {Button} from "@mui/material"
 
 export function Home() {
-    console.log("kotona")
+    const handleClick = useNavigate()
+
   return (
     <Hbimg>
         <div>
-          <h1>Kalaan</h1>
+          <Button
+           
+          variant="containded"
+          color="primary"
+          size="large"
+          onClick={() => handleClick("/dashboard")}
+          >
+            Kalaan
+          </Button>
         </div>
     </Hbimg>
 
