@@ -1,4 +1,4 @@
-# Tämä on suunnittelu vaiheessa
+# Tämä on suunnitteluvaiheessa
 
 Tähän on tulossa kalastus applikaatio johon käyttäjät voivat lisätä omia saalis tietoja ja lesoilla niillä toisille käyttäjille. 
 
