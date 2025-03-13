@@ -32,7 +32,8 @@ router.post("/signup",
         const newUser = await pool.query(
             "INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3 ) RETURNING *", [username,email,hashedPassword]
         );
-        res.json(newUser.rows[0]);
+        //res.json(newUser.rows[0]);
+        res.json({ message: "ok", user: newUser.rows[0] });
     }catch(error){
         res.status(500).json({error: error.message});
     }
