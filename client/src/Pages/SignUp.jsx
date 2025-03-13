@@ -16,9 +16,10 @@ import {useState} from 'react'
 
 export function SignUp(){
 
-    //const [users, setUserData] = useState({})
+    const [errors, setErrors] = useState({})
     const handleSignUp = async (event) => {
         event.preventDefault();
+        setErrors([]);
         const data = new FormData(event.currentTarget); 
         const username = data.get("username");
         const email = data.get("email");
@@ -29,8 +30,9 @@ export function SignUp(){
           alert("You must agree to the T&C to continue.");
           return;
         }
-    
+        
         try {
+            
             const response = await fetch("http://localhost:5000/auth/signup", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -38,10 +40,19 @@ export function SignUp(){
                 credentials: "include",
             })
             const data = await response.json();
+            
             if (!response.ok){
-                throw new Error(data.error || "Register failed");
+                //Errors if users tries to use weak password or wrong type email
+                //Errors are set to array form
+                if(data.errors){
+                    setErrors(data.errors.map(err => err.msg));
+                }else{
+                    throw new Error(data.error || "Registration failed");
+                }
+            }else{
+                window.location.href = "/login";
             }
-            window.location.href = "/login";
+            
         } catch (error){
             alert(error.message);
         }
@@ -67,6 +78,16 @@ export function SignUp(){
                         <Typography component="h1" variant="h5">
                             Register
                         </Typography>
+                        {/*Show error messages if user gives worngly typed creaditentials */}
+                        {errors.length > 0 && (
+                            <Box sx={{ color: "red", mb: 2 }}>
+                                {errors.map((error, index) => (
+                                <Typography key={index} variant="body2">
+                                    {error}
+                                </Typography>
+                            ))}
+                        </Box>
+                        )}
                         <Box component="form" onSubmit={handleSignUp} noValidate sx={{mt:2}}>
                             <TextField name="username" placeholder="Enter username" fullWidth required autoFocus sx={{ mb: 2 }} />
                             <TextField name="email" placeholder="Enter email" fullWidth required autoFocus sx={{ mb: 2 }} />

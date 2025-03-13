@@ -20,7 +20,7 @@ router.post("/signup",
     async (req, res)=>{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-          return res.send(errors.errors[0].msg);
+          return res.status(400).json({errors: errors.array()});
         }
     try{
         const {username,email, password} = req.body; 
@@ -37,7 +37,7 @@ router.post("/signup",
     }catch(error){
         res.status(500).json({error: error.message});
     }
-
+ 
 });
 
 router.post("/login", async (req,res)=>{
