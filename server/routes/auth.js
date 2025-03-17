@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const pool = require("../data/dataDB.js");
 const {body, validationResult} = require("express-validator");
 
+const authenticate = require("../middleware/authMiddleware.js");
+
 const router = express.Router();
 const SECRET = process.env.JWT_SECRET;
 dotenv.config();
@@ -67,8 +69,30 @@ router.post("/login", async (req,res)=>{
 /* const validateToken = function(req, res) {
     const authHeader = req.headers["authorization"]
 } */
-router.get("/validate",  async (req,res)=>{
-    res.send("toimii");
+
+
+    
+router.get("/profile",authenticate , async (req,res)=>{
+    try {
+        const userId = req.user.id;
+        const user = await pool.query("SELECT id, username FROM users WHERE id = $1", [userId]);
+        const userFishingGear = await pool.query("SELECT * FROM fishing_gear WHERE user_id = $1",[userId]);
+        
+
+        if (user.rows.length === 0 ) {
+            res.status(404).json({error: "User not found"});
+
+        }
+        res.json({
+            user: user.rows[0],
+            userFishingGear: userFishingGear.rows
+        });
+    }catch(error){
+        res.status(500).json({error: "server error"})
+    }
 })
+
+
+
 
 module.exports = router;
