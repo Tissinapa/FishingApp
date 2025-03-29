@@ -1,4 +1,5 @@
-
+//import { BrowserRouter  as Router, Routes, Route , Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +13,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { ListItemText } from '@mui/material';
 
 
+
 const drawerWidth = 240;
 
 export default function SideBar(){
+    const navigate = useNavigate();
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline />
@@ -34,13 +37,16 @@ export default function SideBar(){
                 <Toolbar />
                 <Divider />
                 <List>
-                    {['Dashboard', 'Profile', 'jotain', 'tähän vois laittaaa'].map((text)=>(
-                        <ListItem key={text} disablePadding >
-                            <ListItemButton>
-                                <ListItemText primary={text}/>
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => navigate("/dashboard")}>
+                            <ListItemText primary="Dashboard"/>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => navigate("/profile")}>
+                            <ListItemText primary="Profile"/>
+                        </ListItemButton>
+                    </ListItem>
                 </List>
                 <Divider />
                 <List>
